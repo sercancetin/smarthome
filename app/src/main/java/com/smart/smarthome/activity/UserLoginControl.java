@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.smart.smarthome.base.BaseActivity;
-import com.smart.smarthome.MainActivity;
 import com.smart.smarthome.R;
 import com.smart.smarthome.model.User;
 

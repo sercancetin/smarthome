@@ -1,4 +1,4 @@
-package com.smart.smarthome;
+package com.smart.smarthome.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.smart.smarthome.R;
+import com.smart.smarthome.activity.UserLoginControl;
 import com.smart.smarthome.adapter.MenuAdapter;
+import com.smart.smarthome.base.BaseActivity;
 import com.smart.smarthome.model.MenuModel;
 
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 sharedHelper.setUserLogin(false);
-                startActivity(new Intent(getApplicationContext(),UserLoginControl.class));
+                startActivity(new Intent(getApplicationContext(), UserLoginControl.class));
                 finish();
                 return false;
             }

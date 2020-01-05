@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import com.smart.smarthome.MainActivity;
 import com.smart.smarthome.R;
 import com.smart.smarthome.helper.SharedHelper;
 
