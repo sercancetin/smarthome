@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "315083559292",
+    "firebase_url": "https://lightcontrol-580bc.firebaseio.com",
+    "project_id": "lightcontrol-580bc",
+    "storage_bucket": "lightcontrol-580bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315083559292:android:e467d2da14124cfe1594f9",
+        "android_client_info": {
+          "package_name": "com.smart.smarthome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315083559292-2q9jnj3a7qs8qmv7lkb30qb8orsgrobo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart.smarthome",
+            "certificate_hash": "271e0ca2c2ce7a21dca44acff30d667e6c9e0d39"
+          }
+        },
+        {
+          "client_id": "315083559292-7do4cnueitg2gfl0ltdv406q2b2b9qkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwATdCpQ_XhP4v6p7r_ko_qiMBgcvhBfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315083559292-7do4cnueitg2gfl0ltdv406q2b2b9qkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
