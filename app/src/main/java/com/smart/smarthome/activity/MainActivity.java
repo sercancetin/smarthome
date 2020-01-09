@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smart.smarthome.R;
-import com.smart.smarthome.activity.UserLoginControl;
 import com.smart.smarthome.adapter.MenuAdapter;
 import com.smart.smarthome.base.BaseActivity;
 import com.smart.smarthome.model.MenuModel;
@@ -26,14 +27,23 @@ public class MainActivity extends BaseActivity {
     RecyclerView rcy_menu;
     MenuAdapter menuAdapter;
     ArrayList<MenuModel> list;
+    Button btn_add_menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rcy_menu = findViewById(R.id.rcy_menu);
+        btn_add_menu = findViewById(R.id.btn_add_menu);
         setRecyclerGridLayoutManager(rcy_menu,2);
         list = new ArrayList<>();
         getMenu();
+        btn_add_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MenuInsert.class));
+                finish();
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

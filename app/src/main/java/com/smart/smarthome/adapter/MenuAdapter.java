@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.smart.smarthome.MenuShow;
 import com.smart.smarthome.R;
+import com.smart.smarthome.activity.MenuShow;
 import com.smart.smarthome.model.MenuModel;
 import com.squareup.picasso.Picasso;
 

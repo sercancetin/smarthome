@@ -15,13 +15,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smart.smarthome.R;
+import com.smart.smarthome.base.BaseActivity;
 import com.smart.smarthome.model.MenuModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MenuShow extends AppCompatActivity {
+public class MenuShow extends BaseActivity {
     @BindView(R.id.btn_onoff)
     Button btn_onoff;
     @BindView(R.id.txt_seekbar)
@@ -29,7 +30,7 @@ public class MenuShow extends AppCompatActivity {
     @BindView(R.id.seekbar)
     SeekBar seekbar;
     DatabaseReference db;
-    int button_value,seeksingle=0;
+    int button_value,seeksingle=0,seekbars;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +42,8 @@ public class MenuShow extends AppCompatActivity {
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                db.child("seekbar").setValue(progress);
                 txt_seekbar.setText("%"+progress);
+                seekbars = progress;
             }
 
             @Override
@@ -62,6 +63,10 @@ public class MenuShow extends AppCompatActivity {
         } else {
             db.child("onoff").setValue(1);
         }
+    }
+    @OnClick(R.id.btn_save1) void btn_save1Click(){
+        db.child("seekbar").setValue(seekbars);
+        message("Kayıt Edildi");
     }
     private void getValueMenu(){
         db.addValueEventListener(new ValueEventListener() {

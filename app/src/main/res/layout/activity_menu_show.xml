@@ -44,16 +44,27 @@
                 android:id="@+id/txt_seekbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="%40"/>
+                android:text="%"/>
             <SeekBar
                 android:id="@+id/seekbar"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:progress="40"
-                android:max="100"
+                android:progress="0"
+                android:max="255"
                 android:progressDrawable="@drawable/seekbar_style"
                 android:thumb="@drawable/custom_thumb"/>
         </LinearLayout>
+        <Button
+            android:id="@+id/btn_save1"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:background="@color/onbuton"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:layout_gravity="center_horizontal"
+            android:text="Seekbar Kayıt Et"/>
     </LinearLayout>
 </ScrollView>
