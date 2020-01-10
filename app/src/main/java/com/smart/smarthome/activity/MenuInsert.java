@@ -149,4 +149,11 @@ public class MenuInsert extends BaseActivity {
         startActivity(new Intent(this,MainActivity.class));
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
+    }
 }

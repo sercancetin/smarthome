@@ -3,20 +3,36 @@ package com.smart.smarthome.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.Dialog;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.smart.smarthome.R;
 import com.smart.smarthome.base.BaseActivity;
+import com.smart.smarthome.helper.AlarmTaskHelper;
 import com.smart.smarthome.model.MenuModel;
+import com.smart.smarthome.service.AlarmService;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,20 +45,27 @@ public class MenuShow extends BaseActivity {
     TextView txt_seekbar;
     @BindView(R.id.seekbar)
     SeekBar seekbar;
+
     DatabaseReference db;
-    int button_value,seeksingle=0,seekbars;
+    ArrayList<MenuModel> list;
+    AlarmTaskHelper alarmTaskHelper;
+    int button_value, seeksingle = 0, seekbars;
+    private String menuid,choosetime,menuname;
+    int value_seekbar;
+    Calendar takvim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_show);
         ButterKnife.bind(this);
-        String menuid = getIntent().getStringExtra("menuid");
+        menuid = getIntent().getStringExtra("menuid");
         db = FirebaseDatabase.getInstance().getReference("menuler").child(menuid);
         getValueMenu();
+        alarmTaskHelper = new AlarmTaskHelper(this);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                txt_seekbar.setText("%"+progress);
+                txt_seekbar.setText("%" + progress);
                 seekbars = progress;
             }
 
@@ -56,34 +79,61 @@ public class MenuShow extends BaseActivity {
 
             }
         });
+        list = new ArrayList<MenuModel>();
+        Log.d("authorize","MenuShow: getList"+alarmTaskHelper.alarmSaveShared.getAlarm());
     }
-    @OnClick(R.id.btn_onoff) void btn_onoffClick(){
-        if(button_value==1){
+
+    @OnClick(R.id.btn_onoff)
+    void btn_onoffClick() {
+        if (button_value == 1) {
             db.child("onoff").setValue(0);
         } else {
             db.child("onoff").setValue(1);
         }
     }
-    @OnClick(R.id.btn_save1) void btn_save1Click(){
+    @OnClick(R.id.btn_alarm_add) void btn_alarm_addClick(){
+        // Şimdiki zaman bilgilerini alıyoruz. güncel saat, güncel dakika.
+        takvim = Calendar.getInstance();
+        int saat = takvim.get(Calendar.HOUR_OF_DAY);
+        int dakika = takvim.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                choosetime = hourOfDay+":"+minute;
+                setAlarmDialog(choosetime);
+                takvim.set(takvim.get(Calendar.YEAR),takvim.get(Calendar.MONTH),
+                        takvim.get(Calendar.DAY_OF_MONTH),
+                        hourOfDay,minute,0);
+            }
+        }, saat, dakika, true);
+        timePickerDialog.setButton(TimePickerDialog.BUTTON_POSITIVE, "Seç", timePickerDialog);
+        timePickerDialog.setButton(TimePickerDialog.BUTTON_NEGATIVE, "İptal", timePickerDialog);
+        timePickerDialog.show();
+    }
+
+    @OnClick(R.id.btn_save1)
+    void btn_save1Click() {
         db.child("seekbar").setValue(seekbars);
         message("Kayıt Edildi");
     }
-    private void getValueMenu(){
+
+    private void getValueMenu() {
         db.addValueEventListener(new ValueEventListener() {
             MenuModel menuModel;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     menuModel = dataSnapshot.getValue(MenuModel.class);
                     getSupportActionBar().setTitle(menuModel.getMenuad());
-                    if(seeksingle==0){
+                    menuname = menuModel.getMenuad();
+                    if (seeksingle == 0) {
                         seeksingle++;
                         seekbar.setProgress(menuModel.getSeekbar());
-                        txt_seekbar.setText("%"+menuModel.getSeekbar());
+                        txt_seekbar.setText("%" + menuModel.getSeekbar());
                     }
 
                     button_value = menuModel.getOnoff();
-                    if(menuModel.getOnoff()==1){
+                    if (menuModel.getOnoff() == 1) {
                         btn_onoff.setText("Açık");
                         btn_onoff.setBackgroundColor(getResources().getColor(R.color.onbuton));
                     } else {
@@ -98,5 +148,63 @@ public class MenuShow extends BaseActivity {
 
             }
         });
+    }
+    private void setAlarmDialog(String hour){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_set_alarm);
+        Button btn_onoff1 = dialog.findViewById(R.id.btn_onoff1);
+        TextView txt_seekbar1 = dialog.findViewById(R.id.txt_seekbar1);
+        Button btn_save1 = dialog.findViewById(R.id.btn_save1);
+        SeekBar seekbar1 = dialog.findViewById(R.id.seekbar1);
+        seekbar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                value_seekbar = progress;
+                txt_seekbar1.setText("%"+progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        btn_onoff1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                message("Açık olmak zorunda");
+            }
+        });
+        btn_save1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(alarmTaskHelper.getAlarmList()!=null){
+                    list = alarmTaskHelper.getAlarmList();
+                }
+                MenuModel menuModel = new MenuModel();
+                menuModel.setHour(hour);
+                menuModel.setMenuid(menuid);
+                menuModel.setMenuad(menuname);
+                menuModel.setOnoff(1);
+                menuModel.setSeekbar(value_seekbar);
+                list.add(menuModel);
+                alarmTaskHelper.setAlarmList(list);
+                message("Kayıt Edildi...");
+                setAlarm(takvim.getTimeInMillis());
+                dialog.dismiss();
+            }
+        });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+    }
+    public void setAlarm(long timemillies){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmService.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP,timemillies,pendingIntent);
     }
 }

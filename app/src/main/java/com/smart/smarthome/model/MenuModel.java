@@ -1,7 +1,7 @@
 package com.smart.smarthome.model;
 
 public class MenuModel {
-    private String icon,menuad,menuid;
+    private String icon,menuad,menuid,hour;
     private int seekbar,onoff;
 
     public String getIcon() {
@@ -42,5 +42,13 @@ public class MenuModel {
 
     public void setMenuid(String menuid) {
         this.menuid = menuid;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 }

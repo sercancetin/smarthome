@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="On/Off Butonu:"/>
+        <Button
+            android:id="@+id/btn_onoff1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/onbuton"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Açık"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:text="Seekbar Değer:"/>
+        <TextView
+            android:id="@+id/txt_seekbar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%0"/>
+        <SeekBar
+            android:id="@+id/seekbar1"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:progress="0"
+            android:max="255"
+            android:progressDrawable="@drawable/seekbar_style"
+            android:thumb="@drawable/custom_thumb"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_save1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/answerbg"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Kayıt Et"/>
+</LinearLayout>

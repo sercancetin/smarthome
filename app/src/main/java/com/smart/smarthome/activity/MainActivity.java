@@ -48,12 +48,19 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem menuItem = menu.add("Oturumu Kapat");
+        MenuItem menuItem1 = menu.add("Görev Listesi");
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 sharedHelper.setUserLogin(false);
                 startActivity(new Intent(getApplicationContext(), UserLoginControl.class));
                 finish();
+                return false;
+            }
+        });
+        menuItem1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 return false;
             }
         });
