@@ -1,6 +1,5 @@
 package com.smart.smarthome.service;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,8 @@ public class AlarmService extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         alarmTaskHelper = new AlarmTaskHelper(context);
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+        Log.d("authorize","AlarmService: Sistem saat: "+currentTime);
         alarmTaskHelper.doTheTask(currentTime);
-        alarmTaskHelper.deleteAlarm(currentTime);
+        alarmTaskHelper.deleteHourAlarm(currentTime);
     }
 }

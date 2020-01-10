@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -99,7 +101,11 @@ public class MenuShow extends BaseActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                choosetime = hourOfDay+":"+minute;
+                if(minute<10){
+                    choosetime = hourOfDay+":0"+minute;
+                } else {
+                    choosetime = hourOfDay+":"+minute;
+                }
                 setAlarmDialog(choosetime);
                 takvim.set(takvim.get(Calendar.YEAR),takvim.get(Calendar.MONTH),
                         takvim.get(Calendar.DAY_OF_MONTH),
@@ -115,6 +121,26 @@ public class MenuShow extends BaseActivity {
     void btn_save1Click() {
         db.child("seekbar").setValue(seekbars);
         message("Kayıt Edildi");
+    }
+    @OnClick(R.id.btn_menu_delete)
+    void btn_menu_deleteClick(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Menüyü silmek mi istiyorsunuz?");
+        builder.setPositiveButton("Sil", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                db.removeValue();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void getValueMenu() {

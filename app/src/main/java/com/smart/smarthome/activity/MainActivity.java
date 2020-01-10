@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smart.smarthome.R;
 import com.smart.smarthome.adapter.MenuAdapter;
+import com.smart.smarthome.adapter.TaskListAdapter;
 import com.smart.smarthome.base.BaseActivity;
 import com.smart.smarthome.model.MenuModel;
 
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity {
         menuItem1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(getApplicationContext(), TaskListActivity.class));
                 return false;
             }
         });

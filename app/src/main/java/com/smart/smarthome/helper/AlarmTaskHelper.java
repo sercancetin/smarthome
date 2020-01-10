@@ -3,6 +3,7 @@ package com.smart.smarthome.helper;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,11 +35,21 @@ public class AlarmTaskHelper {
     public void setAlarmList(ArrayList<MenuModel> menu_list){
         alarmSaveShared.setAlarm(gson.toJson(menu_list));
     }
-    public void deleteAlarm(String hour){
+    public void deleteHourAlarm(String hour){
         ArrayList<MenuModel> list = getAlarmList();
         for(int i =0;i<list.size();i++){
             if(hour.equals(list.get(i).getHour())){
                 list.remove(i);
+                setAlarmList(list);
+            }
+        }
+    }
+    public void deleteIdAlarm(String id,String hour){
+        ArrayList<MenuModel> list = getAlarmList();
+        for(int i =0;i<list.size();i++){
+            if(id.equals(list.get(i).getMenuid())&&hour.equals(list.get(i).getHour())){
+                list.remove(i);
+                setAlarmList(list);
             }
         }
     }

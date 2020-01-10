@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart.smarthome.helper.SharedHelper;
@@ -25,5 +26,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setRecyclerGridLayoutManager(RecyclerView recyclerView, int count) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), count));
+    }
+    public void setRecyclerManagerVertical(RecyclerView recyclerView){
+        RecyclerView.LayoutManager manager= new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.VERTICAL, false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(manager);
     }
 }
