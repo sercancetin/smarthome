@@ -40,7 +40,11 @@ public class AlarmTaskHelper {
         for(int i =0;i<list.size();i++){
             if(hour.equals(list.get(i).getHour())){
                 list.remove(i);
+                i--;
+                Log.d("authorize",hour);
                 setAlarmList(list);
+            }else {
+                Log.d("authorize",hour+"-"+list.get(i).getHour());
             }
         }
     }

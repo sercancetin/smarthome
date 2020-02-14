@@ -26,8 +26,13 @@ public class TaskListActivity extends BaseActivity {
         setRecyclerManagerVertical(rcy_task_list);
         alarmTaskHelper = new AlarmTaskHelper(getApplicationContext());
         ArrayList<MenuModel> list = alarmTaskHelper.getAlarmList();
-        Collections.reverse(list);
-        taskListAdapter = new TaskListAdapter(this,list,alarmTaskHelper);
-        rcy_task_list.setAdapter(taskListAdapter);
+        try{
+            Collections.reverse(list);
+            taskListAdapter = new TaskListAdapter(this,list,alarmTaskHelper);
+            rcy_task_list.setAdapter(taskListAdapter);
+        }catch (Exception e){
+            message("Görev Yok");
+        }
+
     }
 }
