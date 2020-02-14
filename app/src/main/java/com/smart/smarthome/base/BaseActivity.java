@@ -1,5 +1,6 @@
 package com.smart.smarthome.base;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,7 +14,7 @@ import com.smart.smarthome.helper.SharedHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public SharedHelper sharedHelper;
-
+    public ProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +33,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
+    }
+    public void dialogMessage(String message){
+        progressDialog =new ProgressDialog(this);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 }

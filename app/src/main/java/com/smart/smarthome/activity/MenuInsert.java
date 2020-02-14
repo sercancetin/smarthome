@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,15 +22,20 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.smart.smarthome.R;
 import com.smart.smarthome.base.BaseActivity;
+import com.smart.smarthome.model.MenuModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,11 +55,9 @@ public class MenuInsert extends BaseActivity {
     @BindView(R.id.switch_btn_case)
     Switch switch_btn_case;
 
-    ProgressDialog progressDialog;
-
     private StorageReference storageReference;
     private String image_url="";
-    private int switch_case = 0, seekbar_case=0;
+    private int switch_case = 0, seekbar_case=0,menu_count;
     private static final int PICK_IMAGE_CODE = 1000;
 
     @Override
@@ -74,6 +78,7 @@ public class MenuInsert extends BaseActivity {
                 }
             }
         });
+        menuCount();
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -145,7 +150,7 @@ public class MenuInsert extends BaseActivity {
         map.put("menuad",edt_btn_name.getText().toString());
         map.put("onoff",switch_case);
         map.put("seekbar",seekbar_case);
-        db.push().setValue(map);
+        db.child(String.valueOf(menu_count)).setValue(map);
         startActivity(new Intent(this,MainActivity.class));
         finish();
     }
@@ -155,5 +160,21 @@ public class MenuInsert extends BaseActivity {
         super.onBackPressed();
         startActivity(new Intent(this,MainActivity.class));
         finish();
+    }
+    private void menuCount(){
+        dialogMessage("Biraz Bekle");
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference("menuler");
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                menu_count = (int) dataSnapshot.getChildrenCount();
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
