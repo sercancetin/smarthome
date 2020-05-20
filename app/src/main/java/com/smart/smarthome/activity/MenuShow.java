@@ -82,15 +82,17 @@ public class MenuShow extends BaseActivity {
             }
         });
         list = new ArrayList<MenuModel>();
-        Log.d("authorize","MenuShow: getList"+alarmTaskHelper.alarmSaveShared.getAlarm());
+        //Log.d("authorize","MenuShow: getList"+alarmTaskHelper.alarmSaveShared.getAlarm());
     }
 
     @OnClick(R.id.btn_onoff)
     void btn_onoffClick() {
         if (button_value == 1) {
             db.child("onoff").setValue(0);
+            buttonControlBorder(0);
         } else {
             db.child("onoff").setValue(1);
+            buttonControlBorder(1);
         }
     }
     @OnClick(R.id.btn_alarm_add) void btn_alarm_addClick(){
@@ -121,6 +123,7 @@ public class MenuShow extends BaseActivity {
     void btn_save1Click() {
         db.child("seekbar").setValue(seekbars);
         message("Kayıt Edildi");
+        seekbarControlBorder(seekbars);
     }
     @OnClick(R.id.btn_menu_delete)
     void btn_menu_deleteClick(){
@@ -232,5 +235,23 @@ public class MenuShow extends BaseActivity {
         Intent intent = new Intent(this, AlarmService.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP,timemillies,pendingIntent);
+    }
+    private void seekbarControlBorder(int seekbar_val){
+        if(seekbar_val == 255){
+            db.child("onoff").setValue(1);
+        } else if(seekbar_val == 0){
+            db.child("onoff").setValue(0);
+        }
+    }
+    private void buttonControlBorder(int button_val){
+        if(button_val==1){
+            db.child("seekbar").setValue(255);
+            seekbar.setProgress(255);
+            txt_seekbar.setText("%" + 255);
+        } else{
+            db.child("seekbar").setValue(0);
+            seekbar.setProgress(0);
+            txt_seekbar.setText("%" + 0);
+        }
     }
 }

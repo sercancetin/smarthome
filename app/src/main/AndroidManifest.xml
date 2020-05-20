@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activity.TaskListActivity"></activity>
+        <activity android:name=".activity.TaskListActivity"/>
         <activity android:name=".activity.MenuInsert" />
         <activity android:name=".activity.MenuShow" />
         <activity android:name=".activity.UserLoginControl" />
