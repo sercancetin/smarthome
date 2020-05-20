@@ -164,10 +164,10 @@ public class MenuShow extends BaseActivity {
                     button_value = menuModel.getOnoff();
                     if (menuModel.getOnoff() == 1) {
                         btn_onoff.setText("Açık");
-                        btn_onoff.setBackgroundColor(getResources().getColor(R.color.onbuton));
+                        btn_onoff.setBackground(getResources().getDrawable(R.drawable.button_bg_on));
                     } else {
                         btn_onoff.setText("Kapalı");
-                        btn_onoff.setBackgroundColor(getResources().getColor(R.color.offbuton));
+                        btn_onoff.setBackground(getResources().getDrawable(R.drawable.button_bg_off));
                     }
                 }
             }
