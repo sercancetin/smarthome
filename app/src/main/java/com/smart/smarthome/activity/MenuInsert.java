@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -35,8 +36,10 @@ import com.smart.smarthome.base.BaseActivity;
 import com.smart.smarthome.model.MenuModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -57,15 +60,15 @@ public class MenuInsert extends BaseActivity {
 
     private StorageReference storageReference;
     private String image_url="";
-    private int switch_case = 0, seekbar_case=0,menu_count;
+    private int switch_case = 0, seekbar_case=0;
     private static final int PICK_IMAGE_CODE = 1000;
+    ArrayList<Integer> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_insert);
         ButterKnife.bind(this);
-        storageReference = FirebaseStorage.getInstance().getReference("image_upload");
         switch_btn_case.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -121,8 +124,11 @@ public class MenuInsert extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_CODE) {
             showProgressDialog();
+            File f = new File(data.getData().getPath());
+            String imageName = f.getName();
+            storageReference = FirebaseStorage.getInstance().getReference(imageName);
             UploadTask uploadTask = storageReference.putFile(data.getData());
-            Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if(!task.isSuccessful()){
@@ -150,7 +156,7 @@ public class MenuInsert extends BaseActivity {
         map.put("menuad",edt_btn_name.getText().toString());
         map.put("onoff",switch_case);
         map.put("seekbar",seekbar_case);
-        db.child(String.valueOf(menu_count)).setValue(map);
+        db.child(String.valueOf(getMenu_ref(list))).setValue(map);
         startActivity(new Intent(this,MainActivity.class));
         finish();
     }
@@ -163,11 +169,15 @@ public class MenuInsert extends BaseActivity {
     }
     private void menuCount(){
         dialogMessage("Biraz Bekle");
+        list = new ArrayList<>();
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("menuler");
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menu_count = (int) dataSnapshot.getChildrenCount();
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    list.add(Integer.parseInt(dataSnapshot1.getKey()));
+                }
+                Log.d("Authorize",list.toString());
                 progressDialog.dismiss();
             }
 
@@ -176,5 +186,15 @@ public class MenuInsert extends BaseActivity {
 
             }
         });
+    }
+    private int getMenu_ref(ArrayList<Integer> list){
+        int b;
+        for(int a=0;a<list.size();a++){
+            b=a+1;
+            if(list.get(a)!=b){
+                return b;
+            }
+        }
+        return list.size()+1;
     }
 }

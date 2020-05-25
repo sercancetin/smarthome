@@ -63,6 +63,7 @@
             android:background="@color/onbuton"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:padding="10dp"
             android:textSize="10sp"
             android:layout_gravity="center_horizontal"
             android:text="Seekbar Kayıt Et"/>

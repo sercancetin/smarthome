@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity {
     }
     private void getMenu(){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference("menuler");
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
+        db.addValueEventListener(new ValueEventListener() {
             MenuModel m;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

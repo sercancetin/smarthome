@@ -16,7 +16,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".activity.TaskListActivity"/>
         <activity android:name=".activity.MenuInsert" />
-        <activity android:name=".activity.MenuShow" />
+        <activity android:name=".activity.MenuShow" android:parentActivityName=".activity.MainActivity"/>
         <activity android:name=".activity.UserLoginControl" />
         <activity
             android:name=".activity.SplashActivity"

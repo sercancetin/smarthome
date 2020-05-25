@@ -153,7 +153,8 @@ public class MenuShow extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     menuModel = dataSnapshot.getValue(MenuModel.class);
-                    getSupportActionBar().setTitle(menuModel.getMenuad());
+                    getSupportActionBar().setTitle(menuModel.getMenuad()+" (Menu id="+menuid+")");
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     menuname = menuModel.getMenuad();
                     if (seeksingle == 0) {
                         seeksingle++;
