@@ -75,6 +75,7 @@ public class MainActivity extends BaseActivity {
             MenuModel m;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren()){
                     if(snapshot.exists()){
                         m = snapshot.getValue(MenuModel.class);

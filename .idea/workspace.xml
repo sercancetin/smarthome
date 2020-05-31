@@ -9,7 +9,7 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CUSTOM_FILTER" value="authorize" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="669f63c5-cef9-4748-b065-12472a88697c" name="Default Changelist" comment="">
@@ -21,11 +21,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MenuInsert.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MenuInsert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MenuShow.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/smart/smarthome/activity/MenuShow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_menu_show.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_menu_show.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -291,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590003311684</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="menu ekleme ve resim gösterme sorunu düzeltildi">
+      <created>1590434342600</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1590434342600</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -315,6 +318,7 @@
     <MESSAGE value="alarm notification eklendi" />
     <MESSAGE value="menulere sınır değerler eklendi" />
     <MESSAGE value="button bg eklendi" />
-    <option name="LAST_COMMIT_MESSAGE" value="button bg eklendi" />
+    <MESSAGE value="menu ekleme ve resim gösterme sorunu düzeltildi" />
+    <option name="LAST_COMMIT_MESSAGE" value="menu ekleme ve resim gösterme sorunu düzeltildi" />
   </component>
 </project>
